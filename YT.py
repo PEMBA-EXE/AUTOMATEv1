@@ -1,34 +1,51 @@
 import os
 import sys
+import time
+import getpass
 
 # ====== Settings ======
-PASSWORD = "1234"  # ← Your password
+PASSWORD = "1234"  # ← Change to your password
 DOWNLOAD_FOLDER = "YT DOWNLOAD"
-FACEBOOK_URL = "https://www.facebook.com/YOUR_USERNAME"  # ← Your Facebook
+FACEBOOK_URL = "https://www.facebook.com/YOUR_USERNAME"  # ← Replace with your Facebook
 VERSION = "v1.0"
 AUTHOR = "Pemba Gurung"
-GITHUB = "github.com/yourgithub"  # ← Your GitHub
+GITHUB = "github.com/pemba-gurung"
 # ======================
 
+def clear_screen():
+    os.system("clear" if os.name == "posix" else "cls")
+
+def fancy_intro():
+    clear_screen()
+    print("\n" + "=" * 50)
+    print("🚀 LAUNCHING YT DOWNLOADER".center(50))
+    print("=" * 50)
+    for i in range(3, 0, -1):
+        print(f"⏳ Please wait... {i}")
+        time.sleep(0.5)
+    clear_screen()
+
 def logo():
-    print("\n" + "="*45)
-    print("🅈 🅃   🄳 🄾 🅆 🄽 🄻 🄾 🄰 🄳 🄴 🅁")
-    print("="*45)
+    print("=" * 50)
+    print("🅈 🅃   🄳 🄾 🅆 🄽 🄻 🄾 🄰 🄳 🄴 🅁".center(50))
+    print("=" * 50)
     print(f"👤 Author : {AUTHOR}")
     print(f"🌐 GitHub : {GITHUB}")
     print(f"🛠️  Version: {VERSION}")
-    print("="*45 + "\n")
+    print("=" * 50)
 
 def ask_password():
-    attempts = 0
-    while attempts < 3:
-        pwd = input("🔒 Enter Password to Unlock: ").strip()
+    for attempt in range(3):
+        print()
+        pwd = getpass.getpass("🔒 Enter Password to Unlock: ").strip()
         if pwd == PASSWORD:
             print("✅ Access Granted!\n")
+            time.sleep(1)
+            clear_screen()
+            logo()
             return True
         else:
             print("❌ Incorrect password.")
-            attempts += 1
     print("🚫 Too many failed attempts. Exiting...")
     sys.exit()
 
@@ -59,6 +76,7 @@ def open_facebook():
     os.system(f"xdg-open \"{FACEBOOK_URL}\"")
 
 def main():
+    fancy_intro()
     logo()
     ask_password()
     while True:
